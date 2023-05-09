@@ -13,6 +13,8 @@ router.post("/signup", UserController.signupUser);
 
 router.post("/login", UserController.loginUser);
 
+router.post("/loginOrder", UserController.loginOrder);
+
 router.post("/token/refresh", authRefreshToken, UserController.refreshToken);
 
 router.post("/change-password", auth, UserController.updatePassword);

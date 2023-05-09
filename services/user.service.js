@@ -1,5 +1,6 @@
 const UserRepository = require("../data/user.repository");
 const User = require("../models/user");
+const WorkOrder = require("../models/workorder");
 const bcrypt = require("bcrypt");
 const { errorMessages } = require("../utils/messages");
 const CustomError = require("../utils/custom-error");
@@ -26,6 +27,16 @@ exports.login = async (email, password) => {
     } else {
       throw new CustomError(errorMessages.WRONG_PASSWORD, 400);
     }
+  } else {
+    throw new CustomError(errorMessages.ACCOUNT_NOT_FOUND, 400);
+  }
+};
+
+exports.loginWorkOrder = async (loginId) => {
+  // email = email.toLowerCase();
+  const client = await WorkOrder.findOne({ loginId: loginId });
+  if (client) {
+      return jwtSign(client);
   } else {
     throw new CustomError(errorMessages.ACCOUNT_NOT_FOUND, 400);
   }

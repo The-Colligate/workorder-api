@@ -3,7 +3,7 @@ const REFRESH_TOKEN_SECRET =
   process.env.REFRESH_TOKEN_SECRET || "refreshTokenSecret";
 const CONNECTION_STRING =
   process.env.CONNECTION_STRING ||
-  "connection_string_here";
+  "mongodb+srv://billing:mnuKf2c5TncdGKJa@billing-app-js.bnwldcw.mongodb.net/staging?retryWrites=true&w=majority";
 
 const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:3000";
 const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:8000";

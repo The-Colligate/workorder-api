@@ -17,7 +17,7 @@ exports.signupUser = async (req, res, next) => {
     let response = await UserService.register(
       req.body.fullName,
       req.body.email,
-      req.body.password,
+      req.body.password
     );
     res.json(response);
   } catch (error) {
@@ -28,6 +28,15 @@ exports.signupUser = async (req, res, next) => {
 exports.loginUser = async (req, res, next) => {
   try {
     let response = await UserService.login(req.body.email, req.body.password);
+    res.json(response);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.loginOrder = async (req, res, next) => {
+  try {
+    let response = await UserService.loginWorkOrder(req.body.loginId);
     res.json(response);
   } catch (error) {
     next(error);
