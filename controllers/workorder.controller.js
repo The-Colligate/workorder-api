@@ -12,6 +12,15 @@ exports.getWorkOrder = async (req, res, next) => {
   }
 };
 
+exports.getAllWorkOrder = async (req, res, next) => {
+  try {
+    let workorders = await WorkOrderRepository.getAll();
+    res.json(workorders);
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.getCompany = async (req, res, next) => {
   const { id } = req.query;
   try {
@@ -21,6 +30,18 @@ exports.getCompany = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getPayment = async (req, res, next) => {
+  const { id } = req.query;
+  try {
+    let payment = await WorkOrderRepository.getAPayment(id);
+    res.json({ payment: payment });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 
 exports.initWorkOrder = (req, res, next) => {
   let { service } = req.body;

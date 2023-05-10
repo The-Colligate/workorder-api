@@ -20,6 +20,8 @@ const upload = multer({ dest: "uploads/" });
 
 router.get("/", auth, WorkOrderController.getWorkOrder);
 
+router.get("/all", WorkOrderController.getAllWorkOrder);
+
 router.post("/init", WorkOrderController.initWorkOrder);
 
 router.post("/continue", WorkOrderController.continue);
@@ -27,6 +29,8 @@ router.post("/continue", WorkOrderController.continue);
 router.post("/approve", WorkOrderController.approve);
 
 router.get("/company", WorkOrderController.getCompany);
+
+router.get("/payment", WorkOrderController.getPayment);
 
 // Image upload route
 router.post("/upload", upload.single("image"), (req, res) => {

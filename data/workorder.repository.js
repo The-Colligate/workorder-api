@@ -3,7 +3,7 @@ const Payment = require("../models/payment");
 const { errorMessages } = require("../utils/messages");
 const CustomError = require("../utils/custom-error");
 
-// A method for getting a user instance by Id
+// A method for getting a workorder instance by Id
 exports.get = async (id) => {
   let existingWorkOrder = await WorkOrder.findOne({ _id: id }).populate({
     model: "company",
@@ -13,8 +13,27 @@ exports.get = async (id) => {
   return existingWorkOrder;
 };
 
+exports.getAll = async () => {
+  let workOrders = await WorkOrder.find().populate({
+    model: "company",
+    path: "company",
+  }).populate({
+    model:"payment",
+    path:"payment"
+  });
+  if (!workOrders) throw new CustomError("NOT FOUND", 400);
+  return workOrders;
+};
+
+// A method for getting a workorder instance by Id
+exports.getAPayment = async (id) => {
+  let existingPayment = await Payment.findOne({ _id: id });
+  if (!existingPayment) throw new CustomError("NOT FOUND", 400);
+  return existingPayment;
+};
+
 exports.create = async (newWorkOrder) => {
-  await newWorkOrder.save();
+ return await newWorkOrder.save();
 };
 
 exports.update = async (id, updatedOrder, { disableSchema = false } = {}) => {
