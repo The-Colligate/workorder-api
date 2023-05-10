@@ -4,7 +4,10 @@ const WorkOrder = require("../models/workorder");
 const bcrypt = require("bcrypt");
 const { errorMessages } = require("../utils/messages");
 const CustomError = require("../utils/custom-error");
-const { jwtSign } = require("../middleware/authentication.middleware");
+const {
+  jwtSign,
+  jwtSignWO,
+} = require("../middleware/authentication.middleware");
 
 exports.isMatch = (password, user) => {
   return bcrypt.compareSync(password, user);
@@ -36,7 +39,7 @@ exports.loginWorkOrder = async (loginId) => {
   // email = email.toLowerCase();
   const client = await WorkOrder.findOne({ loginId: loginId });
   if (client) {
-      return jwtSign(client);
+    return jwtSignWO(client);
   } else {
     throw new CustomError(errorMessages.ACCOUNT_NOT_FOUND, 400);
   }

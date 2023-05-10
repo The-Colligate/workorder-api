@@ -1,5 +1,26 @@
 const UserRepository = require("../data/user.repository");
+const WorkOrderRepository = require("../data/workorder.repository");
+const CompanyRepository = require("../data/company.repository");
 const WorkOrderService = require("../services/workorder.service");
+
+exports.getWorkOrder = async (req, res, next) => {
+  try {
+    let user = await WorkOrderRepository.get(req.user._id);
+    res.json({ user: user });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getCompany = async (req, res, next) => {
+  const { id } = req.query;
+  try {
+    let company = await CompanyRepository.get(id);
+    res.json({ company: company });
+  } catch (error) {
+    next(error);
+  }
+};
 
 exports.initWorkOrder = (req, res, next) => {
   let { service } = req.body;

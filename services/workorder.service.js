@@ -67,6 +67,7 @@ exports.continueWorkOrder = async (
   let onCreateCompany;
   let onPayment;
   let newUpdate;
+  let payId = existingOrder.payment;
 
   if (!existingOrder.company) {
     onCreateCompany = await CompanyService.addCompany(
@@ -80,8 +81,10 @@ exports.continueWorkOrder = async (
     );
   } //write an update for company here
 
-  if (!existingOrder.payment) {
+  if (!payId) {
     onPayment = await this.workOrderPayment(orderId, upload, type, amount);
+  } else {
+    await WorkOrderRepository.updatePayment(payId, { upload, type, amount });
   }
 
   // console.log("create company", onCreateCompany);

@@ -7,9 +7,9 @@ var PaymentSchema = new Schema({
     ref: "workorder",
     required: true,
   },
-  upload: { type: String, required: true, enum: ["voice", "data"] },
-  type: { type: String, required: true, enum: ["cheque", "deposit slip"] },
-  amount: { type: String, required: true },
+  upload: { type: String, required: false },
+  type: { type: String, required: false },
+  amount: { type: String, required: false },
 });
 
 module.exports = PaymentSchema = mongoose.model("payment", PaymentSchema);

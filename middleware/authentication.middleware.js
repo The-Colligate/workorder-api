@@ -95,6 +95,29 @@ const jwtSign = (user) => {
   };
 };
 
+// Function for generating JWT tokens
+const jwtSignWO = (user) => {
+  delete user.__v;
+  return {
+    token: jwt.sign(
+      {
+        _id: user._id,
+        loginId: user.loginId,
+        workorderId: user.workorderId
+      },
+      SECRET,
+      { expiresIn: ACCESS_TOKEN_EXPIRY_TIME }
+    ),
+    refreshToken: jwt.sign(
+      {
+        _id: user._id,
+      },
+      REFRESH_TOKEN_SECRET,
+      { expiresIn: REFRESH_TOKEN_EXPIRY_TIME }
+    ),
+  };
+};
+
 // Authentication middleware for requesting token
 const authRefreshToken = (req, res, next) => {
   jwt.verify(
@@ -117,4 +140,5 @@ module.exports = {
   authRefreshToken,
   jwtSign,
   roleBasedAuth,
+  jwtSignWO
 };
