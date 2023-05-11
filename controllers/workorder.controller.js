@@ -41,8 +41,6 @@ exports.getPayment = async (req, res, next) => {
   }
 };
 
-
-
 exports.initWorkOrder = (req, res, next) => {
   let { service } = req.body;
   try {
@@ -90,7 +88,7 @@ exports.continue = (req, res, next) => {
 };
 
 exports.approve = (req, res, next) => {
-  const { orderId } = req.body;
+  const { orderId } = req.query;
   try {
     let order = WorkOrderService.approveWorkOrder(orderId);
     res.json(order);

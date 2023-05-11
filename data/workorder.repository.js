@@ -14,13 +14,16 @@ exports.get = async (id) => {
 };
 
 exports.getAll = async () => {
-  let workOrders = await WorkOrder.find().populate({
-    model: "company",
-    path: "company",
-  }).populate({
-    model:"payment",
-    path:"payment"
-  });
+  let workOrders = await WorkOrder.find()
+    .populate({
+      model: "company",
+      path: "company",
+    })
+    .populate({
+      model: "payment",
+      path: "payment",
+    });
+
   if (!workOrders) throw new CustomError("NOT FOUND", 400);
   return workOrders;
 };
@@ -33,7 +36,8 @@ exports.getAPayment = async (id) => {
 };
 
 exports.create = async (newWorkOrder) => {
- return await newWorkOrder.save();
+  const order = await newWorkOrder.save();
+  return order;
 };
 
 exports.update = async (id, updatedOrder, { disableSchema = false } = {}) => {
