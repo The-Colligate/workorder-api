@@ -5,10 +5,15 @@ const CustomError = require("../utils/custom-error");
 
 // A method for getting a workorder instance by Id
 exports.get = async (id) => {
-  let existingWorkOrder = await WorkOrder.findOne({ _id: id }).populate({
-    model: "company",
-    path: "company",
-  });
+  let existingWorkOrder = await WorkOrder.findOne({ _id: id })
+    .populate({
+      model: "company",
+      path: "company",
+    })
+    .populate({
+      model: "payment",
+      path: "payment",
+    });
   if (!existingWorkOrder) throw new CustomError("NOT FOUND", 400);
   return existingWorkOrder;
 };

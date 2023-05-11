@@ -20,6 +20,8 @@ const upload = multer({ dest: "uploads/" });
 
 router.get("/", auth, WorkOrderController.getWorkOrder);
 
+router.get("/no-auth", WorkOrderController.getWorkOrderNoAuth);
+
 router.get("/all", WorkOrderController.getAllWorkOrder);
 
 router.post("/init", WorkOrderController.initWorkOrder);

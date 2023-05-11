@@ -12,6 +12,16 @@ exports.getWorkOrder = async (req, res, next) => {
   }
 };
 
+exports.getWorkOrderNoAuth = async (req, res, next) => {
+  try {
+    const { id } = req.query;
+    let order = await WorkOrderRepository.get(id);
+    res.json({ order: order });
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.getAllWorkOrder = async (req, res, next) => {
   try {
     let workorders = await WorkOrderRepository.getAll();
