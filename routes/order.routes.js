@@ -7,6 +7,7 @@ const {
   roleBasedAuth,
 } = require("../middleware/authentication.middleware");
 const multer = require("multer");
+const fs = require("fs");
 
 const cloudinary = require("cloudinary").v2;
 
@@ -43,6 +44,13 @@ router.post("/upload", upload.single("image"), (req, res) => {
       console.error(error);
       return res.status(500).json({ error: "Failed to upload image" });
     }
+
+    // Delete the uploaded image from the local uploads folder
+    fs.unlink(req.file.path, (err) => {
+      if (err) {
+        console.error(err);
+      }
+    });
 
     // Image uploaded successfully
     // Access the uploaded image URL from result.secure_url

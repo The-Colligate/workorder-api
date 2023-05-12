@@ -10,14 +10,14 @@ require("./config/database.config");
 // Enable cors
 var corsOptions = {
   origin: [
-    "https://worker-order-admin-ui.vercel.app/",
-    "https://workorder-ui.vercel.app/",
-    "http://localhost:3000/",
+    "https://worker-order-admin-ui.vercel.app",
+    "https://workorder-ui.vercel.app",
+    "http://localhost:3000",
   ],
   optionsSuccessStatus: 200,
 };
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 // Adding body parser
 app.use(express.json());
