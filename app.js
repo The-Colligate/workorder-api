@@ -9,11 +9,15 @@ require("./config/database.config");
 
 // Enable cors
 var corsOptions = {
-    origin: ['https://worker-order-admin-ui.vercel.app/','https://workorder-ui.vercel.app/','http://localhost:3000/'],
-    optionsSuccessStatus: 200,
+  origin: [
+    "https://worker-order-admin-ui.vercel.app/",
+    "https://workorder-ui.vercel.app/",
+    "http://localhost:3000/",
+  ],
+  optionsSuccessStatus: 200,
 };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Adding body parser
 app.use(express.json());
@@ -22,5 +26,5 @@ app.use(express.json());
 routes.addRoutes(app);
 
 app.listen(port, () => {
-    console.log(`Server started listening on port ${port}`);
+  console.log(`Server started listening on port ${port}`);
 });
