@@ -36,27 +36,43 @@ router.get("/company", WorkOrderController.getCompany);
 router.get("/payment", WorkOrderController.getPayment);
 
 // Image upload route
-router.post("/upload", upload.single("image"), (req, res) => {
-  // Upload image to Cloudinary
-  cloudinary.uploader.upload(req.file.path, (error, result) => {
-    if (error) {
-      // Handle upload error
-      console.error(error);
-      return res.status(500).json({ error: "Failed to upload image" });
-    }
+router.post("/upload", upload.array("images", 10), (req, res) => {
+  const files = req.files;
 
-    // Delete the uploaded image from the local uploads folder
-    fs.unlink(req.file.path, (err) => {
-      if (err) {
-        console.error(err);
-      }
+  // Upload each image to Cloudinary
+  const uploadPromises = files.map((file) => {
+    return new Promise((resolve, reject) => {
+      cloudinary.uploader.upload(file.path, (error, result) => {
+        if (error) {
+          // Handle upload error
+          console.error(error);
+          reject(error);
+        } else {
+          // Delete the uploaded image from the local uploads folder
+          fs.unlink(file.path, (err) => {
+            if (err) {
+              console.error(err);
+            }
+          });
+
+          resolve(result.secure_url);
+        }
+      });
     });
-
-    // Image uploaded successfully
-    // Access the uploaded image URL from result.secure_url
-    console.log(result);
-    return res.status(200).json({ imageUrl: result.secure_url });
   });
+
+  // Wait for all uploads to complete
+  Promise.all(uploadPromises)
+    .then((uploadedImages) => {
+      // All images uploaded successfully
+      console.log(uploadedImages);
+      return res.status(200).json({ images: uploadedImages });
+    })
+    .catch((error) => {
+      // Error occurred during image upload
+      console.error(error);
+      return res.status(500).json({ error: "Failed to upload images" });
+    });
 });
 
 module.exports = router;
