@@ -34,6 +34,7 @@ var WorkOrderSchema = new Schema({
     enum: ["complete", "incomplete"],
     default: "incomplete",
   },
-});
+},
+{timestamps:true});
 
 module.exports = WorkOrderSchema = mongoose.model("workorder", WorkOrderSchema);
