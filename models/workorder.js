@@ -19,6 +19,21 @@ var WorkOrderSchema = new Schema({
     default: "",
     // required: true,
   },
+  sip: {
+    type: String,
+    default: "",
+    // required: true,
+  },
+  e_one: {
+    type: String,
+    default: "",
+    // required: true,
+  },
+  mbps: {
+    type: String,
+    default: "",
+    // required: true,
+  },
   payment: {
     type: Schema.Types.ObjectId,
     ref: "payment",

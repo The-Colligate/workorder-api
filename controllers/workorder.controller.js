@@ -75,6 +75,9 @@ exports.continue = (req, res, next) => {
     upload,
     type,
     amount,
+    sip,
+    e_one,
+    mbps
   } = req.body;
   try {
     let order = WorkOrderService.continueWorkOrder(
@@ -89,7 +92,10 @@ exports.continue = (req, res, next) => {
       serviceMemo,
       upload,
       type,
-      amount
+      amount,
+      sip,
+    e_one,
+    mbps
     );
     res.json(order);
   } catch (err) {

@@ -61,7 +61,10 @@ exports.continueWorkOrder = async (
   serviceMemo,
   upload,
   type,
-  amount
+  amount,
+  sip,
+  e_one,
+  mbps
 ) => {
   let existingOrder = await WorkOrderRepository.get(orderId);
   let onCreateCompany;
@@ -101,6 +104,15 @@ exports.continueWorkOrder = async (
     }
     if (serviceMemo) {
       orderToUpdate = { ...orderToUpdate, serviceMemo };
+    }
+    if (sip) {
+      orderToUpdate = { ...orderToUpdate, sip };
+    }
+    if (e_one) {
+      orderToUpdate = { ...orderToUpdate, e_one };
+    }
+    if (mbps) {
+      orderToUpdate = { ...orderToUpdate, mbps };
     }
     // let order = await WorkOrderRepository.update(orderId, newWorkOrder);
     if (Object.keys(orderToUpdate).length) {
