@@ -41,7 +41,7 @@ var WorkOrderSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ["approved", "pending", "cancelled"],
+    enum: ["approved", "pending", "cancelled", "completed", 'redo'],
     default: "pending",
   },
   stage: {

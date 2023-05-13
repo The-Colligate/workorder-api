@@ -77,7 +77,7 @@ exports.continue = (req, res, next) => {
     amount,
     sip,
     e_one,
-    mbps
+    mbps,
   } = req.body;
   try {
     let order = WorkOrderService.continueWorkOrder(
@@ -94,8 +94,8 @@ exports.continue = (req, res, next) => {
       type,
       amount,
       sip,
-    e_one,
-    mbps
+      e_one,
+      mbps
     );
     res.json(order);
   } catch (err) {
@@ -107,6 +107,36 @@ exports.approve = (req, res, next) => {
   const { orderId } = req.query;
   try {
     let order = WorkOrderService.approveWorkOrder(orderId);
+    res.json(order);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.EVCapprove = (req, res, next) => {
+  const { orderId } = req.query;
+  try {
+    let order = WorkOrderService.EVCapproveWorkOrder(orderId);
+    res.json(order);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.cancel = (req, res, next) => {
+  const { orderId } = req.query;
+  try {
+    let order = WorkOrderService.denyWorkOrder(orderId);
+    res.json(order);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.redo = (req, res, next) => {
+  const { orderId } = req.query;
+  try {
+    let order = WorkOrderService.redoWorkOrder(orderId);
     res.json(order);
   } catch (err) {
     next(err);

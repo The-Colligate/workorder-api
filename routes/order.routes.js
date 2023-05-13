@@ -31,6 +31,12 @@ router.post("/continue", WorkOrderController.continue);
 
 router.post("/approve", WorkOrderController.approve);
 
+router.post("/EVCapprove", WorkOrderController.EVCapprove);
+
+router.post("/cancel", WorkOrderController.cancel);
+
+router.post("/reverse", WorkOrderController.redo);
+
 router.get("/company", WorkOrderController.getCompany);
 
 router.get("/payment", WorkOrderController.getPayment);

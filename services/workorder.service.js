@@ -159,6 +159,33 @@ exports.approveWorkOrder = async (orderId) => {
   }
 };
 
+exports.EVCapproveWorkOrder = async (orderId) => {
+  try {
+    // let existingOrder = await WorkOrderRepository.get(orderId);
+    await WorkOrderRepository.update(orderId, { status: "completed" });
+  } catch (err) {
+    throw err;
+  }
+};
+
+exports.denyWorkOrder = async (orderId) => {
+  try {
+    // let existingOrder = await WorkOrderRepository.get(orderId);
+    await WorkOrderRepository.update(orderId, { status: "cancelled" });
+  } catch (err) {
+    throw err;
+  }
+};
+
+exports.redoWorkOrder = async (orderId) => {
+  try {
+    // let existingOrder = await WorkOrderRepository.get(orderId);
+    await WorkOrderRepository.update(orderId, { status: "redo" });
+  } catch (err) {
+    throw err;
+  }
+};
+
 exports.newWorkOrder = async (
   id,
   workorderId,
