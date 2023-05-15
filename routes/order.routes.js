@@ -65,4 +65,6 @@ router.post("/upload", upload.single("image"), (req, res) => {
   });
 });
 
+router.post("/mail", WorkOrderController.mail);
+
 module.exports = router;

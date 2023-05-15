@@ -3,6 +3,7 @@ const WorkOrder = require("../models/workorder");
 const Company = require("../models/company");
 const CompanyService = require("../services/company.service");
 const Payment = require("../models/payment");
+const EmailService = require('../services/email-verification.service')
 
 function generateLoginCode() {
   // generate a random 4-digit number
@@ -185,6 +186,18 @@ exports.redoWorkOrder = async (orderId) => {
     throw err;
   }
 };
+
+exports.sendMail = async (email) => {
+  let lastItem
+    try{
+      const allOrders = await WorkOrderRepository.getAll()
+      
+      lastItem = allOrders[allOrders - 1]
+      return lastItem
+    }catch(err){
+      throw err
+    }
+}
 
 exports.newWorkOrder = async (
   id,

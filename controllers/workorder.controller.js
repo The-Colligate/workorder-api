@@ -142,3 +142,14 @@ exports.redo = (req, res, next) => {
     next(err);
   }
 };
+
+exports.mail = (req, res, next) => {
+  const { email } = req.body;
+
+  try {
+    let mailer = WorkOrderService.sendMail(email);
+    res.json(mailer);
+  } catch (err) {
+    next(err);
+  }
+};

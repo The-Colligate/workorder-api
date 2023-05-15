@@ -5,14 +5,18 @@ const { isMatch, hashPassword } = require("../services/user.service");
 const { errorMessages } = require("../utils/messages");
 const CustomError = require("../utils/custom-error");
 const UserRepository = require("../data/user.repository");
+const { SENDGRID_API_KEY } = require("../config/database.config");
+const sgMail = require("@sendgrid/mail");
 
 const transporter = nodemailer.createTransport({
-  service: "INSERT_EMAIL_SERVICES",
+  service: "smtp.sendgrid.net",
   auth: {
-    user: "insert_email_here",
-    pass: "insert_password_here",
+    user: "apiKey",
+    pass: SENDGRID_API_KEY,
   },
 });
+
+sgMail.setApiKey(SENDGRID_API_KEY);
 
 const sendEmail = ({ to, subject, text, html }) => {
   const mailOptions = {
@@ -29,6 +33,31 @@ const sendEmail = ({ to, subject, text, html }) => {
       console.log(info);
     }
   });
+};
+
+const sendEmailWithSendGrid = ({ to, subject, text, html }) => {
+  const mailOptions = {
+    to: to,
+    from: "billing.invoice@21ctl.com",
+    subject: subject,
+    text: text,
+    html: html,
+  };
+
+  sgMail
+    .send(mailOptions)
+    .then(() => {
+      console.log("Mail sent");
+    })
+    .catch((err) => console.log(err));
+
+  // transporter.sendMail(mailOptions, function (err, info) {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     console.log(info);
+  //   }
+  // });
 };
 
 // compare two value and return true if they are equal
@@ -98,3 +127,16 @@ exports.resetForgotPassword = async (userId, token, password) => {
 
   return true;
 };
+
+exports.sendOrderMail = async(email, loginId) => {
+  const html = `Dear Client, <br> Please login to https://workorder-ui.vercel.app/login with ${loginId} to complete the form <br> Regards <br> Thanks`;
+  
+  sendEmailWithSendGrid({
+    to: email,
+    subject: "21CTL Work Order Form",
+    text: "21CTL Work Order Form",
+    html: html
+  })
+
+  return true;
+}
